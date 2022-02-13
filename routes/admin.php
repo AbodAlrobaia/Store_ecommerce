@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Dashboard\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\SettingsController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -20,18 +22,26 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 //     return view('welcome');
 // });
 
+//note that the prefix is admin for all file routs
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
+        Route::group(['namespace' =>'Dashboard','middleware'=>'auth:admin','prefix'=>'admin'],function(){
+            Route::get('/',[DashboardController::class ,'index'])->name('admin.dashboard'); // this frest page admin vister if authintaction
+            Route::group(['prefix'=>'setting'],function (){
+                Route::get('shipping-methods/{type}',[SettingsController::class ,'editshippings'])->name('edit.shpping');
+                Route::PUT('shipping-methods/{id}',[SettingsController::class ,'updateshippings'])->name('update.shpping');
+            });
+        });
 
-//note that the prefix is admin for all file routs 
-Route::group(['namespace' =>'Dashboard','middleware'=>'auth:admin'],function(){
-    
-    Route::get('/',[DashboardController::class ,'index'])->name('admin.dashboard'); // this frest page admin vister if authintaction
-});
 
-Route::group(['namespace' =>'Dashboard','middleware'=>'guest:admin'],function(){
-    
-    Route::get('login',[LoginController::class , 'login'])->name('admin.login');
-    Route::post('login',[LoginController::class , 'postlogin'])->name('admin.postLogin');
+        Route::group(['namespace' =>'Dashboard','middleware'=>'guest:admin'],function(){
+
+            Route::get('login',[LoginController::class , 'login'])->name('admin.login');
+            Route::post('login',[LoginController::class , 'postlogin'])->name('admin.postLogin');
 
 
-});
-
+        });
+    });

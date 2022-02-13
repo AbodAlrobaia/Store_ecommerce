@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +21,9 @@ Route::get('testlayout', function () {
 });
 
 Route::get('hash', function () {
-dd(Hash::make(123456789));
+dd(Hash::make(123));
 });
+// Route::get('test', function () {
+// dd(Setting::all()[0]->value);
+// });
+

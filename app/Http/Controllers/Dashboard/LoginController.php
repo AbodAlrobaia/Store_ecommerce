@@ -16,16 +16,16 @@ class LoginController extends Controller
      public function postlogin(AdminLoginRequest $request){
 
 
-        //validation
+        // validation
 
-        //check
+        // check
         $remember_me=$request->has('remember_me')?true:false;
         if(auth()->guard('admin')->attempt(['email' => $request->input("email"),'password'=>$request->input('password')],$remember_me))
         {
             return redirect()->route('admin.dashboard');
 
         }
-        
-        return redirect()->back()->with(['error' => 'هناك خطاء ماء ']);
+
+        return redirect()->back()->with(['error' => 'هناك خطاء ما']);
     }
 }

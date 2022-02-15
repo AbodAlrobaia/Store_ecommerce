@@ -16,13 +16,14 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('testlayout', function () {
-    return view('layouts.admin');
+Route::get('test', function () {
+   return \App\Models\Setting::find(13);
+
 });
 
-Route::get('hash', function () {
-dd(Hash::make(123));
-});
+// Route::get('hash', function () {
+// dd(Hash::make(123));
+// });
 // Route::get('test', function () {
 // dd(Setting::all()[0]->value);
 // });

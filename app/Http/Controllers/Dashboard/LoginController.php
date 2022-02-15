@@ -28,4 +28,16 @@ class LoginController extends Controller
 
         return redirect()->back()->with(['error' => 'هناك خطاء ما']);
     }
+
+    public function logout()
+    {
+        $guard=$this->getguard(); //  23
+        // $guard->logout();
+
+        return redirect()->route('admin.login');
+    }
+    private function getguard()
+    {
+        return auth('admin')->logout();
+    }
 }

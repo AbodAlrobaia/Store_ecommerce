@@ -11,11 +11,11 @@ class Setting extends Model implements TranslatableContract
 {
     use Translatable;
     use HasFactory;
-    protected $translatedAttributes = ['value'];
+    protected $translatedAttributes = ['value']; // الاشياء التي سوف تترجم
     protected $table ='settings';
 
     // مش شرط نكتب هذه
-    protected $with=['translation']; // بيرجع الترجمات التي في الجدول المكافئ
+    protected $with=['translation']; // عندما نجي نعمل سلكت بنحصل كي بهذا الاسم هذا الذي في به الاشياء المترجمه
 
     protected $fillable=['key','is_translatable','plain_value'];
 

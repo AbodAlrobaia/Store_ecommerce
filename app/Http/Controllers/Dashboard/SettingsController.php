@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShippingRequst;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use DB;
-use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\DB;
 
 class SettingsController extends Controller
 {

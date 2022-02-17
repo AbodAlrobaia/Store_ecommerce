@@ -50,7 +50,8 @@
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                             <span class="mr-1">
-                                <span class="user-name text-bold-700">{{ app()->getLocale() }}</span>
+                                {{-- <span class="user-name text-bold-700">{{ app()->getLocale() }}</span> --}}
+                                <i class="la la-globe "></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">

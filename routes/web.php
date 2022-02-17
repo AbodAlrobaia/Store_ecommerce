@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +17,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('test', function () {
-   return \App\Models\Setting::find(13);
-
+/////////// visible
+Route::get('test1', function () {
+  $category= \App\Models\Category::first();
+  $category->makeVisible('translations');  // داله تجبر على ارجاع الترانزاكشن برغم انها هيدن في  المودل
+  return $category;
 });
 
 // Route::get('hash', function () {

@@ -5,6 +5,7 @@ use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Builder\Function_;
 
 class Category extends Model implements TranslatableContract
 {
@@ -22,4 +23,18 @@ class Category extends Model implements TranslatableContract
         'is_active' => 'boolean',
 
     ];
+
+    public Function scopeParent($query){
+
+        return $query->whereNull('parent_id',null); ;
+    }
+
+    public Function scopeChild($query){
+
+        return $query->whereNotNull('parent_id',null); ;
+    }
+    public Function getActiv(){
+
+      return $this->is_active == 1 ? 'مفعل' :' غير مفعل';
+    }
 }

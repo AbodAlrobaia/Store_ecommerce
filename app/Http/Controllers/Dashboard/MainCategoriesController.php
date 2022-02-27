@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enumerations\CategoryType;
 use App\Http\Requests\MainCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -17,14 +18,19 @@ class MainCategoriesController extends Controller
         //$category = Category::where('parent_id',null)->get();
         //    $category = Category::whereNull('parent_id',null)->select('id','slug')->get();
         //    $category = Category::whereNull('parent_id',null)->get();
-        $categories = Category::parent()->orderBy('id','DESC')->paginate(PAGINATION_COUNT); //PAGINATION_COUNT  FIND IN HELPER FILE
 
+        $categories = Category::with('parents')->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT); //PAGINATION_COUNT  FIND IN HELPER FILE
         return view('dashboard.categories.index', compact('categories'));
+
     }
+
     public function create()
+
     {
-        return view('dashboard.categories.create');
+        $categories=Category::select('id','parent_id')->get();
+        return view('dashboard.categories.create',compact('categories'));
     }
+
     public function store(MainCategoryRequest $request)
     {
         // return $request
@@ -38,10 +44,18 @@ class MainCategoriesController extends Controller
                 $request->request->add(['is_active' => 0]);
             else
                 $request->request->add(['is_active' => 1]);
+            //if user choose main category then we must remove parent id  from the request
 
+            if($request->type ==CategoryType::mainCategory) //main category
+            {
+                // $request->except('parent_id');
+                $request->request->add(['parent_id' => null]);
+            }
 
-                //dd($request->except('_token'));
-            $category=Category::create($request->except('_token'));
+            //if he choose child category we must add parent_id
+
+            //dd($request->except('_token'));
+            $category = Category::create($request->except('_token'));
             $category->name = $request->name;
             $category->save();
             //return
@@ -52,6 +66,7 @@ class MainCategoriesController extends Controller
             return redirect()->route('admin.maincategory')->with(['error' => 'هناك خطاء ما']);
         }
     }
+
     public function edit($id)
     {
         //  نتاكد مثلا عل الايدي موجود الذي تمرر ام لا
@@ -61,6 +76,7 @@ class MainCategoriesController extends Controller
         } else
             return view('dashboard.categories.edit', compact('category'));
     }
+
     public function update($id, MainCategoryRequest $request)  // 27
     {
         try {
@@ -82,6 +98,7 @@ class MainCategoriesController extends Controller
             return redirect()->route('admin.maincategory')->with(['errors' => 'هناك خطاء ما ']);
         }
     }
+
     public function destroy($id)
     {
         try {
@@ -89,11 +106,12 @@ class MainCategoriesController extends Controller
             if (!$category)
                 return redirect()->route('admin.maincategory')->with(['errors' => 'هذا القسم غير موجود']);
             $category->delete();
-            return redirect()->route('admin.maincategory')->with(['success' => 'تم الحذف بنجاح']);
+            return redirect()->route('admin.maincategory')->with(['error' => 'تم الحذف بنجاح']);
         } catch (\Exception $ex) {
             return redirect()->route('admin.maincategory')->with(['error' => 'هناك خطاء ما']);
         }
     }
+
     public function changeStatus()
     {
     }

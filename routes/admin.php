@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\dashboard\BrandsController;
 use App\Http\Controllers\Dashboard\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MainCategoriesController;
+use App\Http\Controllers\dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\SubCategoriesController;
+use App\Http\Controllers\dashboard\TagsController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -79,8 +82,43 @@ Route::group(
                 Route::get('changeStatus/{id}',[SubCategoriesController::class , 'changeStatus']);
             /////////////// sub_category ///////////////////////////
 
+            });
+            Route::group(['prefix'=>'brands'],function(){
+                Route::get('/',[BrandsController::class , 'index'])->name('admin.brands');
+                Route::get('create',[BrandsController::class , 'create'])->name('admin.brands.create');
+                Route::post('store',[BrandsController::class , 'store'])->name('admin.brands.store');
+                Route::get('edit/{id}',[BrandsController::class , 'edit'])->name('admin.brands.edit');
+                Route::post('update/{id}',[BrandsController::class , 'update'])->name('admin.brands.update');
+                Route::get('delete/{id}',[BrandsController::class , 'destroy'])->name('admin.brands.delete');
+                Route::get('changeStatus/{id}',[BrandsController::class , 'changeStatus']);
+            /////////////// end  brand //////////////////////////
 
             });
+            Route::group(['prefix'=>'tags'],function(){
+                Route::get('/',[TagsController::class , 'index'])->name('admin.tags');
+                Route::get('create',[TagsController::class , 'create'])->name('admin.tags.create');
+                Route::post('store',[TagsController::class , 'store'])->name('admin.tags.store');
+                Route::get('edit/{id}',[TagsController::class , 'edit'])->name('admin.tags.edit');
+                Route::post('update/{id}',[TagsController::class , 'update'])->name('admin.tags.update');
+                Route::get('delete/{id}',[TagsController::class , 'destroy'])->name('admin.tags.delete');
+                Route::get('changeStatus/{id}',[TagsController::class , 'changeStatus']);
+            /////////////// end  Tags/////////////////////////
+
+            });
+
+            ///////////////////// START PRODUCT
+            Route::group(['prefix'=>'products'],function(){
+                Route::get('/',[ProductController::class , 'index'])->name('admin.products');
+                Route::get('create',[ProductController::class , 'create'])->name('admin.products_general.create');
+                Route::post('store',[ProductController::class , 'store'])->name('admin.products.general.store');
+                // Route::get('edit/{id}',[ProductController::class , 'edit'])->name('admin.products.edit');
+                // Route::post('update/{id}',[ProductController::class , 'update'])->name('admin.products.update');
+                // Route::get('delete/{id}',[ProductController::class , 'destroy'])->name('admin.products.delete');
+                // Route::get('changeStatus/{id}',[ProductController::class , 'changeStatus']);
+            /////////////// end  PRODUCTS/////////////////////////
+
+            });
+
 
 
 

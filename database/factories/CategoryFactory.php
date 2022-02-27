@@ -16,8 +16,10 @@ class CategoryFactory extends Factory
      *
      * @return array
      */
+    
     public function definition()
     {
+
         return [
             'name' => $this->faker->word(), //   حنتاج كلمة واحده
             'slug' => $this->faker->slug(),

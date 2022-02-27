@@ -37,4 +37,13 @@ class Category extends Model implements TranslatableContract
 
       return $this->is_active == 1 ? 'مفعل' :' غير مفعل';
     }
+
+    public function parents( ){
+        return $this->belongsTo(self::class,'parent_id');
+
+    }
+    public function scopeActive($quere){
+        return $quere -> where('is_active', 1) ;
+
+    }
 }

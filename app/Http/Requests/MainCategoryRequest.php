@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Enumerations\CategoryType;
 
 class MainCategoryRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class MainCategoryRequest extends FormRequest
 
             // 'category' => 'required|array|min:1',
             'name' => 'required',
+            'type' =>  'required|in:1,2' ,      // هذا التايب تبع الراديو بتوم ضروري يكن متطلب وايضا يجي بقيمتين يا صفر يا واحد  type
             'slug' => 'required|unique:categories,slug,'.$this->id,
         ];
     }

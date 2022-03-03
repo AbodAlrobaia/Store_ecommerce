@@ -35,7 +35,7 @@ return [
     |
     | When your application is in debug mode, detailed error messages with
     | stack traces will be shown on every error that occurs within your
-    | application. If disabled, a simple generic error page is shown.
+    | application. If disabled, a simple generic error page is <shown class=""></shown>
     |
     */
 
@@ -92,9 +92,7 @@ return [
     | the language folders that are provided through your application.
     |
     */
-
     'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
@@ -105,7 +103,6 @@ return [
     | localized telephone numbers, street address information and more.
     |
     */
-
     'faker_locale' => 'en_US',
 
     /*
